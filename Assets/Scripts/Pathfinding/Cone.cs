@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 
 namespace Pathfinding
@@ -125,9 +124,35 @@ namespace Pathfinding
         public bool TryGetIntersectionPoint(Cone other, Rect rect, out Vector2 intersectionPoint)
         {
             intersectionPoint = Vector2.zero;
+
+            //can build direct point (on portal)
+
+            //from other cone to this
+            if (Utility.TryGetLineAndLineSegmentIntersection(other.Target.First, Target.First, other.Source.First, other.Source.Second, out _))
+            {
+                intersectionPoint = Target.First;
+                return true;
+            }
             
-            //only cross line checks 
+            if (Utility.TryGetLineAndLineSegmentIntersection(other.Target.First, Target.Second, other.Source.First, other.Source.Second, out _))
+            {
+                intersectionPoint = Target.Second;
+                return true;
+            }
             
+            if (Utility.TryGetLineAndLineSegmentIntersection(other.Target.Second, Target.First, other.Source.First, other.Source.Second, out _))
+            {
+                intersectionPoint = Target.First;
+                return true;
+            }
+            
+            if (Utility.TryGetLineAndLineSegmentIntersection(other.Target.Second, Target.Second, other.Source.First, other.Source.Second, out _))
+            {
+                intersectionPoint = Target.Second;
+                return true;
+            }
+            
+            //outer checks
             Vector2 point = Utility.GetLinesIntersection(Source.First, Target.Second, other.Source.First, other.Target.Second);
 
             if (RectContainsPoint(rect, point))

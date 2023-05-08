@@ -9,6 +9,7 @@ namespace Pathfinding
     {
         public List<Cone> cones;
         
+        //пора делать эту хуйню рекурсивной
         public IEnumerable<Vector2> GetPath(Vector2 start, Vector2 end, IEnumerable<Edge> edges)
         {
             List<Edge> edgesList = edges.ToList();
@@ -45,24 +46,6 @@ namespace Pathfinding
                 Line currentLine = lines[i];
                 Line nextLine = lines[i + 1];
 
-                if (shouldCalculatePoint)
-                {
-                    Cone prevCone = currentCone;
-                    currentCone = new Cone(currentLine, nextLine);
-
-                    if (prevCone.TryGetIntersectionPoint(currentCone, rects[i - 1], out Vector2 intersection))
-                    {
-                        points.Add(intersection);
-                    }
-                    else
-                    {
-                        points.Add(prevCone.Target.Second);
-                        points.Add(currentCone.Source.First);
-                    }
-
-                    continue;
-                }
-                
                 if (currentCone == default)
                 {
                     currentCone = new Cone(currentLine, nextLine);
@@ -78,48 +61,57 @@ namespace Pathfinding
                 
                 cones.Add(currentCone);
 
-                shouldCalculatePoint = true;
+                Cone prevCone = currentCone;
+                currentCone = default;
 
-                // if (IsOntoTheSameLine(currentLine, nextLine))
-                // {
-                //     shouldCalculatePoint = true;
-                //     continue;
-                // }
-                //
-                // Cone newCone = new Cone(currentCone.Target, nextLine);
-                //
-                // if (currentCone.TryGetIntersectionPoint(newCone, rects[i - 1], out Vector2 intersectionPoint))
-                //     points.Add(intersectionPoint);
-                //
-                // currentCone = newCone;
+                Rect checkRect = rects[i];
+                
+                i++;
 
+                while (i < lines.Count - 1)
+                {
+                    //inner cycle
 
-                // cones.Add((currentCone, nextLine));
+                    currentLine = lines[i];
+                    nextLine = lines[i + 1];
 
-                // points.Add(currentCone.TryGetIntersectionPoint(newCone));
-                // currentCone = newCone;
+                    if (currentCone == default)
+                    {
+                        currentCone = new Cone(currentLine, nextLine);
+                        i++;
+                        continue;
+                    }
+
+                    if (currentCone.TryGetInnerCone(nextLine, out Cone newInnerCone))
+                    {
+                        // cones.Add(currentCone);
+                        currentCone = newInnerCone;
+                        i++;
+                        continue;
+                    }
+
+                    break;
+                }
+
+                if (currentCone == default) //it was not possible to enter inner cycle loop
+                    currentCone = new Cone(currentLine, nextLine);
+                
+                
+                if (prevCone.TryGetIntersectionPoint(currentCone, checkRect, out Vector2 intersection))
+                {
+                    points.Add(intersection);
+                }
+                else
+                {
+                    points.Add(prevCone.Target.Second);
+                    points.Add(currentCone.Source.First);
+                }
             }
-            
-            if (shouldCalculatePoint)
-                points.Add(currentCone.Target.First);
             
             cones.Add(currentCone);
             points.Add(end);
 
             return points;
-        }
-
-        bool IsOntoTheSameLine(Line first, Line second)
-        {
-            bool isOntoTheSameHorizontalLine = Mathf.Approximately(first.First.y, first.Second.y)
-                                               && Mathf.Approximately(second.First.y, second.Second.y)
-                                               && Mathf.Approximately(first.First.y, second.First.y);
-                
-            bool isOntoTheSameVerticalLine = Mathf.Approximately(first.First.y, first.Second.y)
-                                             && Mathf.Approximately(second.First.y, second.Second.y)
-                                             && Mathf.Approximately(first.First.y, second.First.y);
-
-            return isOntoTheSameHorizontalLine || isOntoTheSameVerticalLine;
         }
     }
 }

@@ -12,10 +12,7 @@ namespace Pathfinding
         [SerializeField] Vector2 startPoint;
         [SerializeField] Vector2 endPoint;
 
-        [Header("defug")]
-        [SerializeField] Line[] lines; 
-
-        void OnDrawGizmos()
+        void OnDrawGizmosSelected()
         {
             Rect[] rects = Utility.GetRects(edges).Distinct().ToArray();
             
@@ -40,33 +37,7 @@ namespace Pathfinding
             {
                 DrawLine(path[i], path[i+1], Color.yellow);
             }
-
-
-            // Cone currentCone = default;
-            //
-            // for (int i = 0; i < lines.Length - 1; i++)
-            // {
-            //     Line currentLine = lines[i];
-            //     Line nextLine = lines[i + 1];
-            //
-            //     if (currentCone == default)
-            //     {
-            //         currentCone = new Cone(currentLine, nextLine);
-            //         DrawCone(currentCone, currentCone.Target, Color.magenta);
-            //         continue;
-            //     }
-            //
-            //     if (currentCone.TryGetInnerCone(nextLine, out Cone innerCone))
-            //     {
-            //         currentCone = innerCone;
-            //         DrawCone(currentCone, currentCone.Target, Color.magenta);
-            //     }
-            // }
-            //
-            // foreach (var line in lines)
-            // {
-            //     DrawLine(line.First, line.Second, Color.blue);
-            // }
+            
         }
 
         void DrawRect(Rect rect)
@@ -105,11 +76,9 @@ namespace Pathfinding
             Gizmos.color = color;
             
             Gizmos.DrawLine(cone.Source.First, cone.Source.Second);
-            // Gizmos.DrawRay(cone.Source.First, new Vector2(Mathf.Cos(Mathf.Rad2Deg * cone.SecondAngle), Mathf.Sin(Mathf.Rad2Deg * cone.SecondAngle)));
-            // Gizmos.DrawRay(cone.Source.Second, new Vector2(Mathf.Cos(Mathf.Rad2Deg * cone.FirstAngle), Mathf.Sin(Mathf.Rad2Deg * cone.FirstAngle)));
-            
             Gizmos.DrawLine(cone.Source.First, cone.Target.First);
             Gizmos.DrawLine(cone.Source.Second, cone.Target.Second);
+            
             Gizmos.color = gizmosColor;
         }
     }

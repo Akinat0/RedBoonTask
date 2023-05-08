@@ -206,6 +206,115 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &785228346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785228348}
+  - component: {fileID: 785228347}
+  m_Layer: 0
+  m_Name: PathfindingDebug (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &785228347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785228346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45067045182744bb8bc10586da9d42fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edges:
+  - First:
+      serializedVersion: 2
+      x: 1
+      y: 1
+      width: 3
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: 0
+      y: 2
+      width: 2
+      height: 1
+    Start: {x: 1, y: 2}
+    End: {x: 2, y: 2}
+  - First:
+      serializedVersion: 2
+      x: 0
+      y: 2
+      width: 2
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -2
+      y: 2.5
+      width: 2
+      height: 1
+    Start: {x: 0, y: 2.5}
+    End: {x: 0, y: 3}
+  - First:
+      serializedVersion: 2
+      x: -2
+      y: 2.5
+      width: 2
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -3
+      y: 3
+      width: 1
+      height: 1
+    Start: {x: -2, y: 3}
+    End: {x: -2, y: 3.5}
+  - First:
+      serializedVersion: 2
+      x: -3
+      y: 3
+      width: 1
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -3
+      y: 4
+      width: 0.5
+      height: 1
+    Start: {x: -3, y: 4}
+    End: {x: -2.5, y: 4}
+  startPoint: {x: 1.5, y: 1.23}
+  endPoint: {x: -2.64, y: 4.59}
+  lines:
+  - <First>k__BackingField: {x: 0, y: 0}
+    <Second>k__BackingField: {x: 0, y: 0}
+  - <First>k__BackingField: {x: 0, y: -1}
+    <Second>k__BackingField: {x: 2, y: -1}
+  - <First>k__BackingField: {x: 0.25, y: -2}
+    <Second>k__BackingField: {x: 0.5, y: -2}
+--- !u!4 &785228348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785228346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.05122082, y: -1.0566534, z: -0.5151965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961904519
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +401,22 @@ MonoBehaviour:
       height: 1
     Start: {x: -2, y: 3}
     End: {x: -2, y: 3.5}
-  startPoint: {x: 0.54, y: 0.32}
-  endPoint: {x: -2.52, y: 3.25}
+  - First:
+      serializedVersion: 2
+      x: -3
+      y: 3
+      width: 1
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -3
+      y: 4
+      width: 0.5
+      height: 1
+    Start: {x: -3, y: 4}
+    End: {x: -2.5, y: 4}
+  startPoint: {x: 0.59, y: 0.33}
+  endPoint: {x: -2.74, y: 4.59}
   lines:
   - <First>k__BackingField: {x: 0, y: 0}
     <Second>k__BackingField: {x: 0, y: 0}
@@ -314,4 +437,99 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &965191517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 965191519}
+  - component: {fileID: 965191518}
+  m_Layer: 0
+  m_Name: PathfindingDebug (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &965191518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965191517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45067045182744bb8bc10586da9d42fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edges:
+  - First:
+      serializedVersion: 2
+      x: 0
+      y: 2
+      width: 2
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -2
+      y: 2.5
+      width: 2
+      height: 1
+    Start: {x: 0, y: 2.5}
+    End: {x: 0, y: 3}
+  - First:
+      serializedVersion: 2
+      x: -2
+      y: 2.5
+      width: 2
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -3
+      y: 3
+      width: 1
+      height: 1
+    Start: {x: -2, y: 3}
+    End: {x: -2, y: 3.5}
+  - First:
+      serializedVersion: 2
+      x: -3
+      y: 3
+      width: 1
+      height: 1
+    Second:
+      serializedVersion: 2
+      x: -3
+      y: 4
+      width: 0.5
+      height: 1
+    Start: {x: -3, y: 4}
+    End: {x: -2.5, y: 4}
+  startPoint: {x: 2, y: 2}
+  endPoint: {x: -2.88, y: 4.2}
+  lines:
+  - <First>k__BackingField: {x: 0, y: 0}
+    <Second>k__BackingField: {x: 0, y: 0}
+  - <First>k__BackingField: {x: 0, y: -1}
+    <Second>k__BackingField: {x: 2, y: -1}
+  - <First>k__BackingField: {x: 0.25, y: -2}
+    <Second>k__BackingField: {x: 0.5, y: -2}
+--- !u!4 &965191519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965191517}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.05122082, y: -1.0566534, z: -0.5151965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
