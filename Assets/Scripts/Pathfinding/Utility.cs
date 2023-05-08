@@ -79,7 +79,11 @@ namespace Pathfinding
             float s1Sign = GetPointSide(l1, l2, s1);
             float s2Sign = GetPointSide(l1, l2, s2);
 
-            if (s1Sign > 0 && s2Sign > 0 || s1Sign < 0 && s2Sign < 0)
+            const float epsilon = 0.000001f;
+            
+            bool isZeroSign = Mathf.Abs(s1Sign) < epsilon || Mathf.Abs(s2Sign) < epsilon;
+            
+            if ((s1Sign > 0 && s2Sign > 0 || s1Sign < 0 && s2Sign < 0) && !isZeroSign)
             {
                 return false;
             }

@@ -89,13 +89,9 @@ namespace Pathfinding
 
 
         #region operators
-        
-        public bool TryGetIntersectionPoint(Cone other, Rect rect, out Vector2 intersectionPoint)
+
+        public bool HasDirectIntersection(Cone other, out Vector2 intersectionPoint)
         {
-            intersectionPoint = Vector2.zero;
-
-            //can build direct point (on portal)
-
             //from other cone to this
             if (Utility.TryGetLineAndLineSegmentIntersection(other.Target.First, Target.First, other.Source.First, other.Source.Second, out _))
             {
@@ -120,12 +116,22 @@ namespace Pathfinding
                 intersectionPoint = Target.Second;
                 return true;
             }
+
+            intersectionPoint = Vector2.zero;
+            return false;
+        }
+        
+        public bool TryGetOuterIntersectionPoint(Cone other, Rect rect, out Vector2 intersectionPoint, out Vector2 outerLinePoint)
+        {
+            intersectionPoint = Vector2.zero;
+            outerLinePoint= Vector2.zero;
             
             //outer checks
             Vector2 point = Utility.GetLinesIntersection(Source.First, Target.Second, other.Source.First, other.Target.Second);
 
             if (RectContainsPoint(rect, point))
             {
+                outerLinePoint = Source.First;
                 intersectionPoint = point;
                 return true;
             }
@@ -134,6 +140,7 @@ namespace Pathfinding
 
             if (RectContainsPoint(rect, point))
             {
+                outerLinePoint = Source.First;
                 intersectionPoint = point;
                 return true;
             }
@@ -142,6 +149,7 @@ namespace Pathfinding
 
             if (RectContainsPoint(rect, point))
             {
+                outerLinePoint = Source.Second;
                 intersectionPoint = point;
                 return true;
             }
@@ -150,6 +158,7 @@ namespace Pathfinding
 
             if (RectContainsPoint(rect, point))
             {
+                outerLinePoint = Source.Second;
                 intersectionPoint = point;
                 return true;
             }

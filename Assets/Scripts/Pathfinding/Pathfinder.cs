@@ -65,20 +65,35 @@ namespace Pathfinding
                     
                     if (currentCone == default) //it was not possible to enter inner cycle loop
                         currentCone = new Cone(currentLine, nextLine);
-                    
-                    if (prevCone.TryGetIntersectionPoint(currentCone, checkRect, out Vector2 intersection))
+
+                    if (prevCone.HasDirectIntersection(currentCone, out Vector2 intersection))
                     {
                         points.Add(intersection);
                     }
+                    else if (prevCone.TryGetOuterIntersectionPoint(currentCone, checkRect, out intersection, out Vector2 outerLinePoint))
+                    { 
+                        points.Add(intersection);
+                        Vector2 firstShrinkConePoint = Utility.GetLinesIntersection(intersection, outerLinePoint, prevCone.Source.First, prevCone.Source.Second);
+
+                        Vector2 secondShrinkConePoint = 
+                            Utility.TryGetLineAndLineSegmentIntersection(intersection, prevCone.Source.First, prevCone.Target.First, prevCone.Target.Second, out _) 
+                            ? prevCone.Source.First 
+                            : prevCone.Source.Second;
+
+                        prevCone = new Cone(new Line(firstShrinkConePoint, secondShrinkConePoint), new Line(intersection, intersection));
+                    }
                     else
                     {
-                        points.Add(prevCone.Target.Second);
                         points.Add(currentCone.Source.First);
+                        points.Add(prevCone.Target.Second);
+                        // prevCone = new Cone(prevCone.Source, new Line(prevCone.Target.Second, prevCone.Target.Second));
                     }
 
+                    // cones.Add(prevCone);
                     return prevCone;
                 }
                 
+                cones.Add(currentCone);
                 points.Add(end);
 
                 return currentCone;
@@ -87,6 +102,7 @@ namespace Pathfinding
             int index = 0;
             
             CalculateNextCone(ref index, default);
+            
             points.Add(start);
 
             return points;

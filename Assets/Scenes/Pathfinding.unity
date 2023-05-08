@@ -292,7 +292,7 @@ MonoBehaviour:
       height: 1
     Start: {x: -3, y: 4}
     End: {x: -2.5, y: 4}
-  startPoint: {x: 1.5, y: 1.23}
+  startPoint: {x: 1.6, y: 1.23}
   endPoint: {x: -2.64, y: 4.59}
 --- !u!4 &785228348
 Transform:
@@ -388,28 +388,28 @@ MonoBehaviour:
       height: 1
     Second:
       serializedVersion: 2
-      x: -3
+      x: -4
       y: 3
-      width: 1
+      width: 2
       height: 1
     Start: {x: -2, y: 3}
     End: {x: -2, y: 3.5}
   - First:
       serializedVersion: 2
-      x: -3
+      x: -4
       y: 3
-      width: 1
+      width: 2
       height: 1
     Second:
       serializedVersion: 2
-      x: -3
+      x: -4
       y: 4
-      width: 0.5
+      width: 1.5
       height: 1
-    Start: {x: -3, y: 4}
+    Start: {x: -4, y: 4}
     End: {x: -2.5, y: 4}
-  startPoint: {x: 0.59, y: 0.33}
-  endPoint: {x: -2.74, y: 4.59}
+  startPoint: {x: 0.71, y: 0.33}
+  endPoint: {x: -2.83, y: 4.86}
 --- !u!4 &961904521
 Transform:
   m_ObjectHideFlags: 0
