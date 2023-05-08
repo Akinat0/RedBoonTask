@@ -10,23 +10,10 @@ namespace Pathfinding
 
         public Line Source { get; }
         public Line Target { get; }
-
-        public bool IsExpanding => FirstAngle > SecondAngle;
         
-
-        // public float AverageAngle => (SecondAngle - FirstAngle) / 2 + FirstAngle;
-        // public Vector2 AverageSource => (Source.Second - Source.First) / 2 + Source.First;
-
         public Cone(Vector2 source, Line line) : this(new Line(source, source), line)
         {
         }
-
-        // public Cone(Line source, double minAngle, double maxAngle)
-        // {
-        //     Source = source;
-        //     FirstAngle = minAngle;
-        //     SecondAngle = maxAngle;
-        // }
 
         public Cone(Line source, Line target)
         {
@@ -80,6 +67,7 @@ namespace Pathfinding
             Vector2 firstPoint;
             Vector2 secondPoint;
 
+            //we have an intersection
             if (!Utility.TryGetLineAndLineSegmentIntersection(Source.First, Target.First, line.First, line.Second, out firstPoint))
             {
                 //we don't have an intersection, so we shrink cone to line
@@ -99,25 +87,6 @@ namespace Pathfinding
             return true;
         }
 
-        public static bool IsLinePointsOnSameSide(Vector2 l1, Vector2 l2, Line checkLine, out int sign)
-        {
-            sign = 0;
-            
-            if (Utility.GetPointSide(l1, l2, checkLine.First) > 0 && Utility.GetPointSide(l1, l2, checkLine.Second) > 0)
-            {
-                sign = 1;
-                return true;
-            }
-            
-            if (Utility.GetPointSide(l1, l2, checkLine.First) < 0 && Utility.GetPointSide(l1, l2, checkLine.Second) < 0)
-            {
-                sign = -1;
-                return true;
-            }
-
-            return false;
-        }
-        
 
         #region operators
         

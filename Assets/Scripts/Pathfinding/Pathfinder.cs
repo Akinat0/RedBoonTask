@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Pathfinding
 {
-    public struct Pathfinder : IPathFinder
+    public class Pathfinder : IPathFinder
     {
         public List<Cone> cones;
         
@@ -15,6 +16,8 @@ namespace Pathfinding
             List<Edge> edgesList = edges.ToList();
             List<Rect> rects = new List<Rect>(edgesList.Count + 1);
             List<Line> lines = new List<Line>(edgesList.Count);
+            List<Vector2> points = new List<Vector2>();
+            cones = new List<Cone>();
 
             lines.Add(new Line(start, start));
             
@@ -27,89 +30,64 @@ namespace Pathfinding
             }
             
             lines.Add(new Line(end, end));
-            
             rects.Add(edgesList[edgesList.Count - 1].Second);
-
-
-            List<Vector2> points = new List<Vector2>();
             
-            points.Add(start);
-            
-            cones = new List<Cone>();
-
-            Cone currentCone = default;
-
-            bool shouldCalculatePoint = false;
-            
-            for (int i = 0; i < lines.Count - 1; i++)
+            Cone CalculateNextCone(ref int i, Cone currentCone)
             {
-                Line currentLine = lines[i];
-                Line nextLine = lines[i + 1];
-
-                if (currentCone == default)
-                {
-                    currentCone = new Cone(currentLine, nextLine);
-                    continue;
-                }
-
-                if (currentCone.TryGetInnerCone(nextLine, out Cone innerCone))
-                {
-                    // cones.Add(currentCone);
-                    currentCone = innerCone;
-                    continue;
-                }
-                
-                cones.Add(currentCone);
-
-                Cone prevCone = currentCone;
-                currentCone = default;
-
-                Rect checkRect = rects[i];
-                
-                i++;
-
                 while (i < lines.Count - 1)
                 {
-                    //inner cycle
-
-                    currentLine = lines[i];
-                    nextLine = lines[i + 1];
-
+                    Line currentLine = lines[i];
+                    Line nextLine = lines[i + 1];
+                    
                     if (currentCone == default)
                     {
                         currentCone = new Cone(currentLine, nextLine);
                         i++;
                         continue;
                     }
-
-                    if (currentCone.TryGetInnerCone(nextLine, out Cone newInnerCone))
+                    
+                    if (currentCone.TryGetInnerCone(nextLine, out Cone innerCone))
                     {
-                        // cones.Add(currentCone);
-                        currentCone = newInnerCone;
+                        currentCone = innerCone;
                         i++;
                         continue;
                     }
+                    
+                    cones.Add(currentCone);
+                    
+                    Cone prevCone = currentCone;
+                    currentCone = default;
+                    Rect checkRect = rects[i];
 
-                    break;
-                }
+                    i++;
 
-                if (currentCone == default) //it was not possible to enter inner cycle loop
-                    currentCone = new Cone(currentLine, nextLine);
-                
-                
-                if (prevCone.TryGetIntersectionPoint(currentCone, checkRect, out Vector2 intersection))
-                {
-                    points.Add(intersection);
+                    currentCone = CalculateNextCone(ref i, currentCone);
+                    
+                    if (currentCone == default) //it was not possible to enter inner cycle loop
+                        currentCone = new Cone(currentLine, nextLine);
+                    
+                    if (prevCone.TryGetIntersectionPoint(currentCone, checkRect, out Vector2 intersection))
+                    {
+                        points.Add(intersection);
+                    }
+                    else
+                    {
+                        points.Add(prevCone.Target.Second);
+                        points.Add(currentCone.Source.First);
+                    }
+
+                    return prevCone;
                 }
-                else
-                {
-                    points.Add(prevCone.Target.Second);
-                    points.Add(currentCone.Source.First);
-                }
+                
+                points.Add(end);
+
+                return currentCone;
             }
+
+            int index = 0;
             
-            cones.Add(currentCone);
-            points.Add(end);
+            CalculateNextCone(ref index, default);
+            points.Add(start);
 
             return points;
         }
