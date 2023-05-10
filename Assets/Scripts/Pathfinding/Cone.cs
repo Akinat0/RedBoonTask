@@ -4,29 +4,17 @@ namespace Pathfinding
 {
     public readonly struct Cone
     {
-        public float FirstAngle { get; }
-        public float SecondAngle { get; }
-
-
         public Line Source { get; }
         public Line Target { get; }
-        
-        public Cone(Vector2 source, Line line) : this(new Line(source, source), line)
-        {
-        }
 
         public Cone(Line source, Line target)
         {
             Source = source;
             Target = target;
-
-            //если два отрезка пересекаются, то нужно выбрать другие два отрезка,
+            
+            //sort lines
             if (Utility.TryGetLineSegmentsIntersection(Source.First, Target.First, Source.Second, Target.Second, out _))
                 Target = new Line(Target.Second, Target.First);
-            
-            FirstAngle = Vector2.SignedAngle(Vector2.right, Target.First - Source.First);
-            SecondAngle = Vector2.SignedAngle(Vector2.right, Target.Second - Source.Second);
-        
         }
 
         public bool TryGetInnerCone(Line line, out Cone innerCone)
@@ -184,9 +172,7 @@ namespace Pathfinding
 
         public bool Equals(Cone other)
         {
-            return Mathf.Approximately(FirstAngle, other.FirstAngle)
-                   && Mathf.Approximately(SecondAngle, other.SecondAngle)
-                   && Source.First == other.Source.First
+            return Source.First == other.Source.First
                    && Source.Second == other.Source.Second;
         }
 
@@ -199,8 +185,7 @@ namespace Pathfinding
         {
             unchecked
             {
-                int hashCode = FirstAngle.GetHashCode();
-                hashCode = (hashCode * 397) ^ SecondAngle.GetHashCode();
+                int hashCode = Target.GetHashCode();
                 hashCode = (hashCode * 397) ^ Source.GetHashCode();
                 return hashCode;
             }

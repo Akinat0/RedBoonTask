@@ -6,16 +6,6 @@ namespace Pathfinding
 {
     public static class Utility
     {
-        public static IEnumerable<Rect> GetRects(IEnumerable<Edge> edges)
-        {
-            foreach (Edge edge in edges)
-            {
-                yield return edge.First;
-                yield return edge.Second;
-            }
-        }
-        
-        
         public static Vector2 GetLinesIntersection(Vector2 a1, Vector2 a2, Vector2 b1, Vector2 b2)
         {
             float tmp = (b2.x - b1.x) * (a2.y - a1.y) - (b2.y - b1.y) * (a2.x - a1.x);

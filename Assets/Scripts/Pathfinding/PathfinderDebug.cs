@@ -12,37 +12,44 @@ namespace Pathfinding
         [SerializeField] Vector2 startPoint;
         [SerializeField] Vector2 endPoint;
 
+        Pathfinder Pathfinder { get; set; }
+
+        void Start()
+        {
+            Pathfinder = new Pathfinder();
+        }
+
+        void Update()
+        {
+            Pathfinder.GetPath(startPoint, endPoint, edges);
+        }
+
         void OnDrawGizmosSelected()
         {
-            Rect[] rects = Utility.GetRects(edges).Distinct().ToArray();
+            if(Application.isPlaying)
+                return;
             
-            foreach (Rect rect in rects)
-                DrawRect(rect);
+            foreach (Edge edge in edges)
+                DrawRect(edge.First);
+            
+            DrawRect(edges.Last().Second);
             
             DrawPoint(startPoint, "start", Color.green);
             DrawPoint(endPoint, "end", Color.red);
+
+            Pathfinder ??= new Pathfinder();
             
-            Pathfinder pathfinder = new Pathfinder();
-            List<Vector2> path = pathfinder.GetPath(startPoint, endPoint, edges).ToList();
-            
-            foreach (Cone cone in pathfinder.cones)
-            {
-                DrawCone(cone, Color.cyan);
-            }
-            
+            List<Vector2> path = Pathfinder.GetPath(startPoint, endPoint, edges).ToList();
+
             foreach (Edge edge in edges)
                 DrawLine(edge.Start, edge.End, Color.blue);
             
             for (int i = 0; i < path.Count - 1; i++)
-            {
                 DrawLine(path[i], path[i+1], Color.yellow);
-            }
-            
         }
 
         void DrawRect(Rect rect)
         {
-            
             Gizmos.DrawWireCube(rect.center, rect.size);
          
             Handles.Label(rect.min, rect.min.ToString());

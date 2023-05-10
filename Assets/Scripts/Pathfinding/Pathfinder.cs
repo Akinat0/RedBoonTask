@@ -1,44 +1,38 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Pathfinding
 {
     public class Pathfinder : IPathFinder
     {
-        public List<Cone> cones;
-        
-        //пора делать эту хуйню рекурсивной
+        readonly List<Edge> edgesList = new List<Edge>();
+        readonly List<Vector2> points = new List<Vector2>();
+
         public IEnumerable<Vector2> GetPath(Vector2 start, Vector2 end, IEnumerable<Edge> edges)
         {
-            List<Edge> edgesList = edges.ToList();
-            List<Rect> rects = new List<Rect>(edgesList.Count + 1);
-            List<Line> lines = new List<Line>(edgesList.Count);
-            List<Vector2> points = new List<Vector2>();
-            cones = new List<Cone>();
-
-            lines.Add(new Line(start, start));
-            
-            for (int i = 0; i < edgesList.Count; i++)
-            {
-                Edge edge = edgesList[i];
-
-                rects.Add(edge.First);
-                lines.Add(new Line(edge.Start, edge.End));
-            }
-            
-            lines.Add(new Line(end, end));
-            rects.Add(edgesList[edgesList.Count - 1].Second);
-            
             Cone CalculateNextCone(ref int i, Cone currentCone)
             {
-                while (i < lines.Count - 1)
+                while (i < edgesList.Count)
                 {
-                    Line currentLine = lines[i];
-                    Line nextLine = lines[i + 1];
-                    
+                    Line currentLine;
+                    Line nextLine;
+
+                    if (i == 0) //process first point
+                    {
+                        currentLine = new Line(start, start);
+                        nextLine = new Line(edgesList[i].Start, edgesList[i].End);
+                    }
+                    else if (i == edgesList.Count - 1) //process last point
+                    {
+                        currentLine = new Line(edgesList[i].Start, edgesList[i].End);
+                        nextLine = new Line(end, end);
+                    }
+                    else
+                    {
+                        currentLine = new Line(edgesList[i - 1].Start, edgesList[i - 1].End);
+                        nextLine = new Line(edgesList[i].Start, edgesList[i].End);
+                    }
+
                     if (currentCone == default)
                     {
                         currentCone = new Cone(currentLine, nextLine);
@@ -53,11 +47,9 @@ namespace Pathfinding
                         continue;
                     }
                     
-                    cones.Add(currentCone);
-                    
                     Cone prevCone = currentCone;
                     currentCone = default;
-                    Rect checkRect = rects[i];
+                    Rect checkRect = edgesList[i].First;
 
                     i++;
 
@@ -86,18 +78,21 @@ namespace Pathfinding
                     {
                         points.Add(currentCone.Source.First);
                         points.Add(prevCone.Target.Second);
-                        // prevCone = new Cone(prevCone.Source, new Line(prevCone.Target.Second, prevCone.Target.Second));
                     }
-
-                    // cones.Add(prevCone);
+                    
                     return prevCone;
                 }
                 
-                cones.Add(currentCone);
                 points.Add(end);
 
                 return currentCone;
             }
+
+            edgesList.Clear();
+            points.Clear();
+
+            foreach (Edge edge in edges)
+                edgesList.Add(edge);
 
             int index = 0;
             

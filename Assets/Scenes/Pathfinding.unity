@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 785228348}
   - component: {fileID: 785228347}
   m_Layer: 0
-  m_Name: PathfindingDebug (2)
+  m_Name: harder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,7 +292,7 @@ MonoBehaviour:
       height: 1
     Start: {x: -3, y: 4}
     End: {x: -2.5, y: 4}
-  startPoint: {x: 1.6, y: 1.23}
+  startPoint: {x: 3.61, y: 1.19}
   endPoint: {x: -2.64, y: 4.59}
 --- !u!4 &785228348
 Transform:
@@ -306,7 +306,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &961904519
 GameObject:
@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 961904521}
   - component: {fileID: 961904520}
   m_Layer: 0
-  m_Name: PathfindingDebug
+  m_Name: not correct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,17 +375,17 @@ MonoBehaviour:
     Second:
       serializedVersion: 2
       x: -2
-      y: 2.5
+      y: 2
       width: 2
-      height: 1
-    Start: {x: 0, y: 2.5}
+      height: 1.5
+    Start: {x: 0, y: 2}
     End: {x: 0, y: 3}
   - First:
       serializedVersion: 2
       x: -2
-      y: 2.5
+      y: 2
       width: 2
-      height: 1
+      height: 1.5
     Second:
       serializedVersion: 2
       x: -4
@@ -408,7 +408,7 @@ MonoBehaviour:
       height: 1
     Start: {x: -4, y: 4}
     End: {x: -2.5, y: 4}
-  startPoint: {x: 0.71, y: 0.33}
+  startPoint: {x: 1.63, y: 0.33}
   endPoint: {x: -2.83, y: 4.86}
 --- !u!4 &961904521
 Transform:
@@ -422,7 +422,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &965191517
 GameObject:
@@ -435,7 +435,7 @@ GameObject:
   - component: {fileID: 965191519}
   - component: {fileID: 965191518}
   m_Layer: 0
-  m_Name: PathfindingDebug (1)
+  m_Name: harder2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +510,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1186844653
 GameObject:
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 1186844655}
   - component: {fileID: 1186844654}
   m_Layer: 0
-  m_Name: PathfindingDebug (3)
+  m_Name: simple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -570,8 +570,8 @@ MonoBehaviour:
       height: 1
     Start: {x: 3, y: 1}
     End: {x: 4, y: 1}
-  startPoint: {x: 0.72, y: 0.33}
-  endPoint: {x: 4.24, y: 0.45}
+  startPoint: {x: 0.19, y: 0.33}
+  endPoint: {x: 4.16, y: 0.45}
 --- !u!4 &1186844655
 Transform:
   m_ObjectHideFlags: 0
@@ -584,5 +584,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
